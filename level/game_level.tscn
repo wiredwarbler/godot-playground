@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2y8rr5l4a4p8"]
+
+[ext_resource type="PackedScene" uid="uid://dd8d245obhihu" path="res://characters/player_cat.tscn" id="1_al1ts"]
+
+[node name="GameLevel" type="Node2D"]
+
+[node name="PlayerCat" parent="." instance=ExtResource("1_al1ts")]
+position = Vector2(13, 12)
