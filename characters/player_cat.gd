@@ -5,17 +5,20 @@ extends CharacterBody2D
 @export var run_multiplier: float = 1.4;
 @export var starting_direction: Vector2 = Vector2(0, 1); # based on the sprites
 
-#todo: it'd be good to have the constant strings put into a dictionary (or two?)
-#@export var animation_state_names: Dictionary = { 
-	#"Walk" = "Walking",
-	#"Idle" = "Idle"
-#};
+# State Names #
+enum PLAYER_STATE { IDLE, WALKING }; # todo: implement this
+# referenced as PLAYER_STATE.IDLE, PLAYER_STATE.WALKING
 
+var idle_state: String = "Idle";
+var walk_state: String = "Walking";
+
+# Resource Paths #
 var blend_path_format: String = "parameters/%s/blend_position";
-var idle_path: String = blend_path_format % "Idle"; # -> "parameters/Idle/blend_position";
-var walking_path: String = blend_path_format % "Walking" # -> "parameters/Walking/blend_position";
+var idle_path: String = blend_path_format % idle_state; # -> "parameters/Idle/blend_position";
+var walk_path: String = blend_path_format % walk_state # -> "parameters/Walking/blend_position";
 
-@onready var animation_tree = $AnimationTree; # $ references associated "AnimationTree" node
+# On Ready #
+@onready var animation_tree = $AnimationTree; # $ references associated "AnimationTree" node (could this be named anything?)
 @onready var state_machine = animation_tree.get("parameters/playback");
 
 func _ready():
@@ -60,9 +63,12 @@ func _physics_process(delta):
 func update_animation_parameters(move_input: Vector2):
 	# todo: other params will need to be used to handle different inputs
 	if (move_input != Vector2.ZERO):
-		animation_tree.set(walking_path, move_input);
+		animation_tree.set(walk_path, move_input);
 		animation_tree.set(idle_path, move_input);
 
 func set_next_animation_state():
-	if (velocity != Vector2.ZERO): state_machine.travel("Walking");
-	else: state_machine.travel("Idle");
+	# https://docs.godotengine.org/en/latest/tutorials/scripting/gdscript/gdscript_basics.html#match
+	# use the `match` statement to switch states
+	if (velocity != Vector2.ZERO): state_machine.travel(walk_state); # will this always work? what happens if travel isn't allowed?
+	else: state_machine.travel(idle_state);
+	# state_machine.travel(walk_state if velocity != Vector2.ZERO else idle_state); # would work if there were only ever 2 states
