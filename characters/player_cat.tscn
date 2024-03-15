@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dd8d245obhihu"]
+[gd_scene load_steps=29 format=3 uid="uid://dd8d245obhihu"]
 
 [ext_resource type="Texture2D" uid="uid://bxjrysxqo5lmh" path="res://art/Sprout Lands - Sprites - Basic pack/Characters/Basic Charakter Spritesheet.png" id="1_7fy0m"]
 [ext_resource type="Script" path="res://characters/player_cat.gd" id="1_8ylj3"]
@@ -195,6 +195,8 @@ min_space = Vector2(-1, -1.1)
 max_space = Vector2(1, 1.1)
 blend_mode = 1
 
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_8ocsb"]
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6gdtu"]
 animation = &"walk_down"
 
@@ -228,10 +230,13 @@ blend_mode = 1
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_7lfjl"]
+states/End/position = Vector2(687, 100)
 states/Idle/node = SubResource("AnimationNodeBlendSpace2D_jcmb6")
 states/Idle/position = Vector2(329, 101)
+states/Running/node = SubResource("AnimationNodeBlendSpace2D_8ocsb")
+states/Running/position = Vector2(417, 184)
 states/Walking/node = SubResource("AnimationNodeBlendSpace2D_1ydw0")
-states/Walking/position = Vector2(379, 184)
+states/Walking/position = Vector2(230, 184)
 transitions = ["Idle", "Walking", SubResource("AnimationNodeStateMachineTransition_7w3ni"), "Walking", "Idle", SubResource("AnimationNodeStateMachineTransition_cd07k"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_ps25l")]
 
 [node name="PlayerCat" type="CharacterBody2D"]
@@ -258,5 +263,6 @@ libraries = {
 }
 tree_root = SubResource("AnimationNodeStateMachine_7lfjl")
 anim_player = NodePath("../AnimationPlayer")
-parameters/Idle/blend_position = Vector2(0.149813, -0.374815)
+parameters/Idle/blend_position = Vector2(0.115686, -0.111454)
+parameters/Running/blend_position = Vector2(0, 0)
 parameters/Walking/blend_position = Vector2(-0.110487, 0.252593)

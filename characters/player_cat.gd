@@ -6,7 +6,7 @@ extends CharacterBody2D
 @export var starting_direction: Vector2 = Vector2(0, 1); # based on the sprites
 
 # State Names #
-enum PLAYER_STATE { IDLE, WALKING }; # todo: implement this
+enum PLAYER_STATE { IDLE, WALKING, RUNNING }; # todo: implement this
 # referenced as PLAYER_STATE.IDLE, PLAYER_STATE.WALKING
 
 var idle_state: String = "Idle";
